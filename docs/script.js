@@ -188,15 +188,17 @@ async function main() {
   });
 
   audio.addEventListener("loadedmetadata", () => {
-    document.querySelector(".songtime").innerHTML =
-      `00:00 / ${secondsToMinutes(audio.duration)}`;
+    document.querySelector(".songtime").innerHTML = `00:00 / ${secondsToMinutes(
+      audio.duration
+    )}`;
   });
 
   audio.addEventListener("timeupdate", () => {
     if (isNaN(audio.duration)) return;
 
-    document.querySelector(".songtime").innerHTML =
-      `${secondsToMinutes(audio.currentTime)} / ${secondsToMinutes(audio.duration)}`;
+    document.querySelector(".songtime").innerHTML = `${secondsToMinutes(
+      audio.currentTime
+    )} / ${secondsToMinutes(audio.duration)}`;
 
     const percent = (audio.currentTime / audio.duration) * 100;
     document.querySelector(".circle").style.left = percent + "%";
@@ -205,28 +207,25 @@ async function main() {
 
   document.querySelector(".seekbar").addEventListener("click", (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    audio.currentTime = (e.clientX - rect.left) / rect.width * audio.duration;
+    audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
   });
 
-  const hamburger = document.querySelector(".hamburger");
-const leftMenu = document.querySelector(".left");
+  const hamburger = document.querySelector(".hamburger img");
+  const leftMenu = document.querySelector(".left");
 
-let isOpen = false;
+  let isOpen = false;
 
-hamburger.addEventListener("click", () => {
-  if (isOpen) {
-    // Close menu
-    leftMenu.style.left = "-100%";
-    hamburger.src = "elements/hamburger.svg";
-  } else {
-    // Open menu
-    leftMenu.style.left = "0";
-    hamburger.src = "elements/cross.svg";
-  }
-
-  isOpen = !isOpen;
-});
-
+  hamburger.addEventListener("click", () => {
+    if (!isOpen) {
+      leftMenu.style.left = "0";
+      hamburger.src = "elements/cross.svg";
+      isOpen = true;
+    } else {
+      leftMenu.style.left = "-100%";
+      hamburger.src = "elements/hamburger.svg";
+      isOpen = false;
+    }
+  });
 }
 
 main();
