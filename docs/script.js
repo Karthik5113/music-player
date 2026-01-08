@@ -1,8 +1,13 @@
 console.log("welcome to javascript");
 
+/* =========================
+   BACKEND URL (VERY IMPORTANT)
+========================= */
+const BACKEND_URL = "https://music-player-backend-hmmp.onrender.com";
+
 let audio = new Audio();
-let allSongs = []; // MASTER playlist songs
-let visibleSongs = []; // FILTERED songs (shown on left)
+let allSongs = [];
+let visibleSongs = [];
 let currentSong = null;
 let currentIndex = 0;
 
@@ -17,7 +22,7 @@ function secondsToMinutes(seconds) {
 }
 
 /* =========================
-   PLAY SONG
+   PLAY SONG (FIXED)
 ========================= */
 function playSong(song, index) {
   if (!song) return;
@@ -25,8 +30,9 @@ function playSong(song, index) {
   currentSong = song;
   currentIndex = index;
 
-  audio.src = song;
+  audio.src = `${BACKEND_URL}/${song}`; // ✅ FIX
   audio.play();
+
   play.src = "elements/pause.svg";
 
   const songName = song
@@ -44,7 +50,7 @@ function playSong(song, index) {
    FETCH PLAYLIST DATA
 ========================= */
 async function getAllPlaylists() {
-  const res = await fetch("https://music-player-backend-hmmp.onrender.com/api/songs");
+  const res = await fetch(`${BACKEND_URL}/api/songs`);
   return await res.json();
 }
 
@@ -54,16 +60,14 @@ async function getAllPlaylists() {
 async function loadPlaylists() {
   const data = await getAllPlaylists();
   const container = document.querySelector(".playlist-container");
-
   container.innerHTML = "";
 
   Object.keys(data).forEach((folder) => {
-    const playlistData = data[folder];
-    const playlistSongs = Array.isArray(playlistData)
-      ? playlistData
-      : playlistData.songs;
-
-    const cover = playlistData.cover || "elements/default-cover.jpg";
+    const playlist = data[folder];
+    const songs = playlist.songs || [];
+    const cover = playlist.cover
+      ? `${BACKEND_URL}/${playlist.cover}`
+      : "elements/default-cover.jpg";
 
     const card = document.createElement("div");
     card.className = "card";
@@ -72,13 +76,13 @@ async function loadPlaylists() {
       <div class="play-btn">
         <div class="play-icon"></div>
       </div>
-      <img src="${BACKEND_URL}/${playlist.cover}" alt="${folder}">
+      <img src="${cover}" alt="${folder}">
       <h2>${folder}</h2>
-      <p>${playlistSongs.length} songs</p>
+      <p>${songs.length} songs</p>
     `;
 
     card.addEventListener("click", () => {
-      loadSongsFromFolder(folder, playlistSongs);
+      loadSongsFromFolder(folder, songs);
     });
 
     container.appendChild(card);
@@ -86,7 +90,7 @@ async function loadPlaylists() {
 }
 
 /* =========================
-   RENDER SONGS (LEFT PANEL)
+   RENDER SONG LIST
 ========================= */
 function renderSongs(songArray, folder) {
   const songUL = document.querySelector(".song-list ul");
@@ -103,7 +107,7 @@ function renderSongs(songArray, folder) {
       </div>
       <div class="playnow">
         <span>Play now</span>
-        <img class="invert" src="elements/play.svg" alt="">
+        <img class="invert" src="elements/play.svg">
       </div>
     `;
 
@@ -121,30 +125,31 @@ function renderSongs(songArray, folder) {
 function loadSongsFromFolder(folder, folderSongs) {
   if (!Array.isArray(folderSongs)) return;
 
-  allSongs = folderSongs; // MASTER
-  visibleSongs = [...allSongs]; // SHOW ALL
+  allSongs = folderSongs;
+  visibleSongs = [...allSongs];
   currentIndex = 0;
 
-  document.getElementById("searchInput").value = ""; // clear search
   renderSongs(visibleSongs, folder);
 
   if (allSongs.length > 0) {
-    playSong(allSongs[0], 0);
+    playSong(allSongs[0], 0); // ✅ AUTO PLAY FIRST SONG
   }
 }
 
 /* =========================
-   SEARCH FILTER
+   SEARCH (SAFE)
 ========================= */
 const searchInput = document.getElementById("searchInput");
 
-searchInput.addEventListener("input", () => {
-  const query = searchInput.value.toLowerCase();
-
-  visibleSongs = allSongs.filter((song) => song.toLowerCase().includes(query));
-
-  renderSongs(visibleSongs, ""); // artist name not needed in search
-});
+if (searchInput) {
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    visibleSongs = allSongs.filter((song) =>
+      song.toLowerCase().includes(query)
+    );
+    renderSongs(visibleSongs, "");
+  });
+}
 
 /* =========================
    MAIN
@@ -154,6 +159,7 @@ async function main() {
 
   play.addEventListener("click", () => {
     if (!currentSong) return;
+
     if (audio.paused) {
       audio.play();
       play.src = "elements/pause.svg";
@@ -182,17 +188,15 @@ async function main() {
   });
 
   audio.addEventListener("loadedmetadata", () => {
-    document.querySelector(".songtime").innerHTML = `00:00 / ${secondsToMinutes(
-      audio.duration
-    )}`;
+    document.querySelector(".songtime").innerHTML =
+      `00:00 / ${secondsToMinutes(audio.duration)}`;
   });
 
   audio.addEventListener("timeupdate", () => {
     if (isNaN(audio.duration)) return;
 
-    document.querySelector(".songtime").innerHTML = `${secondsToMinutes(
-      audio.currentTime
-    )} / ${secondsToMinutes(audio.duration)}`;
+    document.querySelector(".songtime").innerHTML =
+      `${secondsToMinutes(audio.currentTime)} / ${secondsToMinutes(audio.duration)}`;
 
     const percent = (audio.currentTime / audio.duration) * 100;
     document.querySelector(".circle").style.left = percent + "%";
@@ -201,27 +205,7 @@ async function main() {
 
   document.querySelector(".seekbar").addEventListener("click", (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    audio.currentTime = (clickX / rect.width) * audio.duration;
-  });
-
-  const hamburger = document.querySelector(".hamburger img");
-  const leftMenu = document.querySelector(".left");
-
-  let isOpen = false;
-
-  hamburger.addEventListener("click", () => {
-    if (!isOpen) {
-      // Open menu
-      leftMenu.style.left = "0";
-      hamburger.src = "elements/cross.svg";
-      isOpen = true;
-    } else {
-      // Close menu
-      leftMenu.style.left = "-100%";
-      hamburger.src = "elements/hamburger.svg";
-      isOpen = false;
-    }
+    audio.currentTime = (e.clientX - rect.left) / rect.width * audio.duration;
   });
 }
 
