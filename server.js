@@ -1,11 +1,15 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
+const cors = require("cors"); // ✅ ADD THIS
 
-const app = express(); // ✅ app is defined here
-const PORT = 3000;
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-/* Serve static files */
+/* ✅ ENABLE CORS */
+app.use(cors());
+
+/* Serve static files (songs & images) */
 app.use(express.static(__dirname));
 
 /* API: Get songs + covers */
@@ -29,7 +33,7 @@ app.get("/api/songs", (req, res) => {
 
       const imageExtensions = [".jpg", ".jpeg", ".png", ".webp", ".avif"];
 
-      const coverFile = files.find(file =>
+      const coverFile = files.find((file) =>
         imageExtensions.includes(path.extname(file).toLowerCase())
       );
 
@@ -52,5 +56,5 @@ app.get("/api/songs", (req, res) => {
 
 /* Start server */
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
