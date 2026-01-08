@@ -44,7 +44,7 @@ function playSong(song, index) {
    FETCH PLAYLIST DATA
 ========================= */
 async function getAllPlaylists() {
-  const res = await fetch("/api/songs");
+  const res = await fetch("https://music-player-backend-hmmp.onrender.com/api/songs");
   return await res.json();
 }
 
