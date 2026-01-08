@@ -207,6 +207,26 @@ async function main() {
     const rect = e.currentTarget.getBoundingClientRect();
     audio.currentTime = (e.clientX - rect.left) / rect.width * audio.duration;
   });
+
+  const hamburger = document.querySelector(".hamburger img");
+const leftMenu = document.querySelector(".left");
+
+let isOpen = false;
+
+hamburger.addEventListener("click", () => {
+  if (isOpen) {
+    // Close menu
+    leftMenu.style.left = "-100%";
+    hamburger.src = "elements/hamburger.svg";
+  } else {
+    // Open menu
+    leftMenu.style.left = "0";
+    hamburger.src = "elements/cross.svg";
+  }
+
+  isOpen = !isOpen;
+});
+
 }
 
 main();
