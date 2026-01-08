@@ -452,7 +452,7 @@ body {
     left: -200%;
     transition: all 0.3s;
     z-index: 3000;
-    height: 100vh;
+    height: 110vh;
     padding: 20px;
     background-color: black;
     border-radius: 0px;
