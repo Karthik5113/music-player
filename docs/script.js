@@ -217,11 +217,11 @@ async function main() {
 
   hamburger.addEventListener("click", () => {
     if (!isOpen) {
-      leftMenu.style.left = "0";
+      leftMenu.style.left = "-3%";
       hamburger.src = "elements/cross.svg";
       isOpen = true;
     } else {
-      leftMenu.style.left = "-100%";
+      leftMenu.style.left = "-200%";
       hamburger.src = "elements/hamburger.svg";
       isOpen = false;
     }
