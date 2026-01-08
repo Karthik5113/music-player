@@ -1,0 +1,17 @@
+<svg width="30"
+     height="30"
+     viewBox="0 0 28 28"
+     fill="none"
+     xmlns="http://www.w3.org/2000/svg">
+
+  <path d="M7 7 L21 21"
+        stroke="#ffffff"
+        stroke-width="2.4"
+        stroke-linecap="round"/>
+
+  <path d="M21 7 L7 21"
+        stroke="#ffffff"
+        stroke-width="2.4"
+        stroke-linecap="round"/>
+
+</svg>

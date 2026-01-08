@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playwrite+IN:wght@100..400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="utility.css">
+</head>
+
+<body>
+    <div class="container bg-black">
+        <div class="top">
+                <div class="hamburger"><img src="elements/hamburger.svg" alt=""></div>
+                <div class="logo"><img src="elements/logo.png" alt=""></div>
+        </div>
+
+        <div class="bottom">
+            <div class="left">
+                <div class="search">
+                    <div class="search-icon invert" id="searchBtn"><img src="elements/search-bar.svg" alt="search-icon"></div>
+                    <input type="text" id="searchInput" placeholder="what do you want to play?">
+                </div>
+                <div class="library">
+                    <h2>Your Library</h2>
+                    <div class="plus-icon invert"><img src="elements/plus.svg" alt="create playlist"></div>
+                </div>
+
+                <div class="song-list">
+                    <ul>
+
+                    </ul>
+                </div>
+
+                <div class="footer">
+                    <p>Designed and Developed by Kartik Malipatil </p>
+                    <p>© 2026 | VK</p>
+                </div>
+            </div>
+            <div class="right bg-grey">
+                <div class="playlist">
+                    <h1>VK playlist</h1>
+                    <div class="playlist-container"></div>
+                </div>
+                <div class="play-bar">
+                    <div class="seekbar">
+                        <div class="seekbar-bg"></div>
+                        <div class="seekbar-progress"></div>
+                        <div class="circle"></div>
+                    </div>
+                    <div class="song-bar">
+                        <div class="song">
+                            <div class="songinfo">
+                            </div>
+                            <div class="songtime">
+                            </div>
+                        </div>
+                        <div class="song-button">
+                            <img id="previous" src="elements/prevsong.svg" alt="">
+                            <img id="play" class="invert" src="elements/play.svg" alt="">
+                            <img id="next" src="elements/nextsong.svg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

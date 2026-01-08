@@ -1,0 +1,11 @@
+.invert{
+    filter: invert(1);
+}
+
+.bg-grey{
+    background-color: #121212;
+}
+
+.bg-black{
+    background-color: black;
+}
