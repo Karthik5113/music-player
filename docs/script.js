@@ -208,7 +208,7 @@ async function main() {
     audio.currentTime = (e.clientX - rect.left) / rect.width * audio.duration;
   });
 
-  const hamburger = document.querySelector(".hamburger img");
+  const hamburger = document.querySelector(".hamburger");
 const leftMenu = document.querySelector(".left");
 
 let isOpen = false;
