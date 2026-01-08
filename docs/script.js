@@ -72,7 +72,7 @@ async function loadPlaylists() {
       <div class="play-btn">
         <div class="play-icon"></div>
       </div>
-      <img src="${cover}" alt="${folder}">
+      <img src="${BACKEND_URL}/${playlist.cover}" alt="${folder}">
       <h2>${folder}</h2>
       <p>${playlistSongs.length} songs</p>
     `;
