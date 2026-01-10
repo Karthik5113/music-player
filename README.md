@@ -38,46 +38,6 @@ The project follows a real-world architecture with a static frontend and a Node.
 
 ## 📁 Project Structure
 
-# 🎵 Full-Stack Music Player Web Application
-
-A full-stack music player web application that dynamically loads playlists and streams songs from the backend.  
-The project follows a real-world architecture with a static frontend and a Node.js backend.
-
----
-
-## 🚀 Features
-
-- Dynamic playlist generation based on folder structure  
-- Play / Pause / Next / Previous song controls  
-- Search songs within a playlist  
-- Responsive UI with hamburger navigation  
-- Automatic playlist updates when new song folders are added  
-- Audio streaming from backend server  
-
----
-
-## 🛠️ Tech Stack
-
-**Frontend**
-- HTML5
-- CSS3
-- JavaScript
-- Hosted on GitHub Pages
-
-**Backend**
-- Node.js
-- Express.js
-- REST API
-- Hosted on Render
-
-**Tools**
-- Git & GitHub
-- VS Code
-
----
-
-## 📁 Project Structure
-
 music-player/
 │
 ├── docs/ # Frontend (GitHub Pages)
