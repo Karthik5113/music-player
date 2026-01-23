@@ -29,6 +29,7 @@ body {
   color: white;
   font-family: "Poppins", sans-serif;
   height: 100%;
+  overflow: hidden;
 }
 
 .top {
@@ -485,6 +486,10 @@ body {
 
   .library {
     padding: 10px 10px 0 10px;
+  }
+
+  .right{
+    height: auto;
   }
 
   .playlist-container {
